@@ -1077,7 +1077,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
 
     private void loadLinhVucVaTheLoai(int maSach) {
         // Load LinhVuc for the book
-        List<LinhVuc> linhVucs = linhVucDAO.findBySachID(maSach);
+        List<LinhVuc> linhVucs = linhVucDAO.findByLinhVucID(maSach);
         if (!linhVucs.isEmpty()) {
             cboLinhVuc.setSelectedItem(linhVucs.get(0));
         }
@@ -1150,7 +1150,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             }
 
             // Tải toàn bộ danh sách lĩnh vực và thể loại
-            List<LinhVuc> linhVucs = linhVucDAO.findBySachID(entity.getMaSach());
+            List<LinhVuc> linhVucs = linhVucDAO.findByLinhVucID(entity.getMaSach());
             updateCboLinhVuc(linhVucs);
 
             List<LoaiSach> loaiSachs = loaiSachDAO.findBySachID(entity.getMaSach());
@@ -1277,7 +1277,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             String tenNXB = nhaXuatBanDAO.findByID(sach.getMaNXB()).getTenNXB();
 
             // Lấy danh sách lĩnh vực và loại sách (quan hệ nhiều-nhiều)
-            List<LinhVuc> linhVucs = linhVucDAO.findBySachID(sach.getMaSach());
+            List<LinhVuc> linhVucs = linhVucDAO.findByLinhVucID(sach.getMaSach());
             List<LoaiSach> loaiSachs = loaiSachDAO.findBySachID(sach.getMaSach());
 
             // Chuẩn bị dữ liệu hiển thị
