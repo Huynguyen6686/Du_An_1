@@ -474,7 +474,7 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
                 phieuGiamGia.getMaKH(),
                 phieuGiamGia.getGiaTri(),
                 phieuGiamGia.getDieuKienApDung(),
-                phieuGiamGia.getTrangThai() == 1 ? "Có hiệu lực" : "Đã hết"
+                phieuGiamGia.getTrangThai() == 1 ? "Có hiệu lực" : "Đã hết hạn"
             };
             defaultTableModel.addRow(rowData);
         }
