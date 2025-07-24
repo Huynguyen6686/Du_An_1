@@ -19,7 +19,6 @@ public class PhieuGiamGia {
     private int MaKH;
     private int GiaTri;
     private int DieuKienApDung;
-    private Date NgayHetHan;
     private int TrangThai;
 
 }
