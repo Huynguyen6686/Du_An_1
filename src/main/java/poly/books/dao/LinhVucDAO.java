@@ -57,10 +57,10 @@ public class LinhVucDAO {
     public int delete(int id) {
         return XJdbc.executeUpdate(delete, id);
     }
-    public List<LinhVuc> findBySachID(int maSach) {
+    public List<LinhVuc> findByLinhVucID(int maLinhVuc) {
     String sql = "SELECT lv.* FROM LinhVuc lv " +
                  "JOIN Sach_LinhVuc slv ON lv.MaLinhVuc = slv.MaLinhVuc " +
                  "WHERE slv.MaSach = ?";
-    return XQuery.getBeanList(LinhVuc.class, sql, maSach);
+    return XQuery.getBeanList(LinhVuc.class, sql, maLinhVuc);
 }    
 }
