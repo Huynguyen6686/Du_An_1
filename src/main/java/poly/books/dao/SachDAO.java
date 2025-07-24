@@ -18,18 +18,18 @@ public class SachDAO {
 
     // SQL lấy tất cả sách (đã bỏ MaLinhVuc và MaLoaiSach)
     String getAllSQL = """
-                       SELECT  [MaSach]
-                               ,[TenSach]
-                               ,[MaTacGia]
-                               ,[MaNXB]
-                               ,[NamXuatBan]
-                               ,[GiaBan]
-                               ,[LanTaiBan]
-                               ,[ISBN]
-                               ,[Tap]
-                               ,[MaNgonNgu]
-                               ,[HinhAnh]
-                           FROM [QLNhaSachPro].[dbo].[Sach]
+                       SELECT TOP (1000) [MaSach]
+                             ,[TenSach]
+                             ,[MaTacGia]
+                             ,[MaNXB]
+                             ,[NamXuatBan]
+                             ,[GiaBan]
+                             ,[LanTaiBan]
+                             ,[ISBN]
+                             ,[Tap]
+                             ,[MaNgonNgu]
+                             ,[HinhAnh]
+                         FROM [QLNhaSach].[dbo].[Sach]
                        """;
 
     // SQL tạo sách mới (đã bỏ MaLinhVuc và MaLoaiSach)
