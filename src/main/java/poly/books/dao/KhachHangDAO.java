@@ -4,6 +4,7 @@
  */
 package poly.books.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 import poly.books.entity.KhachHang;
 import poly.books.util.XJdbc;
@@ -29,6 +30,7 @@ public class KhachHangDAO {
                                     ,[DiaChi])
                             VALUES
                                   (?,?,?,?)
+                    SELECT SCOPE_IDENTITY();
                        """;
     String update = """
                    UPDATE [dbo].[KhachHang]
@@ -51,14 +53,23 @@ public class KhachHangDAO {
         
         return XQuery.getSingleBean(KhachHang.class, findBySQL, maLinhVuc);
     }
-    public int create(KhachHang kh) {
+   public int create(KhachHang kh) throws SQLException {
         Object[] rowData = {
             kh.getTenKH(),
             kh.getSDT(),
-            kh.getEmail(),
+            kh.getEmail(), // Đảm bảo đúng thứ tự cột so với câu lệnh INSERT
             kh.getDiaChi()
         };
-        return XJdbc.executeUpdate(create, rowData);
+        XJdbc.executeUpdate(create, rowData);
+        
+        // Lấy giá trị ID tự động
+        Integer id = XJdbc.getIdentityValue("SELECT SCOPE_IDENTITY()", Integer.class);
+        
+        // Kiểm tra nếu id là null (nghĩa là không lấy được ID tự động)
+        if (id == null) {
+            throw new SQLException("Không thể lấy ID tự động sau khi thêm khách hàng.");
+        }
+        return id;
     }
 
     public int update(KhachHang kh) {
@@ -76,10 +87,5 @@ public class KhachHangDAO {
     public int delete(int id) {
         return XJdbc.executeUpdate(delete, id);
     }
-    public List<KhachHang> findByKhachHangID(int maKhachHang) {
-    String sql = "SELECT kh.* FROM KhachHang kh " +
-                 "JOIN Sach_LinhVuc slv ON lv.MaLinhVuc = slv.MaLinhVuc " +
-                 "WHERE slv.MaSach = ?";
-    return XQuery.getBeanList(KhachHang.class, sql, maKhachHang);
-} 
+    
 }

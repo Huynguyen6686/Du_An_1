@@ -23,4 +23,5 @@ public class HoaDon {
     private double TongTien;
     private int PhuongThuc;
     private Date NgayThanhToan;
+    private int TrangThai;
 }

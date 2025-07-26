@@ -68,10 +68,9 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
     public QuanLySach(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        fillCboNgonNgu();
-        fillCboNhaXuatBan();
+
         fillToTable();
-        fillCboTacGia();
+
         cboLinhVuc.setModel(new DefaultComboBoxModel<>());
         cboTheLoai.setModel(new DefaultComboBoxModel<>());
         btnxoalv.addActionListener(e -> removeSelectedLinhVuc());
@@ -84,6 +83,9 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
 
         fillToTablelv();
         fillToTabletl();
+        fillToTablenxb();
+        fillToTabletg();
+        fillToTableng();
         tbllv.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbllvMouseClicked(evt);
@@ -110,8 +112,6 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
     public void refresLoaiSachTable() {
         fillToTabletl();
     }
-
-    
 
     private void removeSelectedLinhVuc() {
         int index = cboLinhVuc.getSelectedIndex();
@@ -154,32 +154,21 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
         }
     }
 
-    public void fillCboNhaXuatBan() {
-        DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) cboNXB.getModel();
-        defaultComboBoxModel.removeAllElements();
-        nhaXuatBanList = nhaXuatBanDAO.getAll();
-        for (NhaXuatBan nhaXuatBan : nhaXuatBanList) {
-            defaultComboBoxModel.addElement(nhaXuatBan);
-        }
+    private String getTenTacGia(int maTacGia) {
+        TacGia tacGia = TacGiaDAO.findByID(maTacGia);
+        return tacGia != null ? tacGia.getTenTacGia() : "Không xác định";
     }
 
-    public void fillCboNgonNgu() {
-        DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) cboNgonNgu.getModel();
-        defaultComboBoxModel.removeAllElements();
-        ngonNguList = ngonNguDAO.getAll();
-        for (NgonNgu ngonNgu : ngonNguList) {
-            defaultComboBoxModel.addElement(ngonNgu);
-        }
+    private String getTenNXB(int maNXB) {
+        NhaXuatBan nxb = nhaXuatBanDAO.findByID(maNXB);
+        return nxb != null ? nxb.getTenNXB() : "Không xác định";
     }
 
-    public void fillCboTacGia() {
-        DefaultComboBoxModel defaultComboBoxModel = (DefaultComboBoxModel) cboTacGia.getModel();
-        defaultComboBoxModel.removeAllElements();
-        listTacGia = TacGiaDAO.getAll();
-        for (TacGia tacgia : listTacGia) {
-            defaultComboBoxModel.addElement(tacgia);
-        }
+    private String getTenNgonNgu(int maNgonNgu) {
+        NgonNgu ngonNgu = ngonNguDAO.findByID(maNgonNgu);
+        return ngonNgu != null ? ngonNgu.getTenNgonNgu() : "Không xác định";
     }
+
     private JFrame parentFrame;
 
     /**
@@ -212,7 +201,6 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
         jLabel17 = new javax.swing.JLabel();
         txtMaSach = new javax.swing.JTextField();
         txtTenSach = new javax.swing.JTextField();
-        cboNXB = new javax.swing.JComboBox<>();
         cboTheLoai = new javax.swing.JComboBox<>();
         cboLinhVuc = new javax.swing.JComboBox<>();
         txtTap = new javax.swing.JTextField();
@@ -231,8 +219,6 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
         tbSach = new javax.swing.JTable();
         jLabel25 = new javax.swing.JLabel();
         txtNamSX = new javax.swing.JTextField();
-        cboNgonNgu = new javax.swing.JComboBox<>();
-        cboTacGia = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -240,8 +226,22 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
         jPanel9 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbltl = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tbltg = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblnxb = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tblng = new javax.swing.JTable();
         btnxoalv = new javax.swing.JButton();
         btnxoatl = new javax.swing.JButton();
+        txtnxb = new javax.swing.JTextField();
+        txtngonngu = new javax.swing.JTextField();
+        txttacgia = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtSoLuong = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -339,15 +339,13 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
 
         jLabel16.setText("Giá bán");
 
-        jLabel17.setText("INBS");
+        jLabel17.setText("ISBN");
 
         txtTenSach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTenSachActionPerformed(evt);
             }
         });
-
-        cboNXB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cboTheLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboTheLoai.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -381,6 +379,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(255, 153, 153));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_add_25px_5.png"))); // NOI18N
         jButton1.setText("Thêm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -389,6 +388,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(255, 255, 204));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_edit_25px.png"))); // NOI18N
         jButton2.setText("Sửa");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -397,6 +397,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(51, 255, 255));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_delete_25px_1.png"))); // NOI18N
         jButton3.setText("Xóa");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -405,6 +406,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             }
         });
 
+        jButton4.setBackground(new java.awt.Color(0, 204, 204));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_reset_25px_1.png"))); // NOI18N
         jButton4.setText("Làm mới");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -416,6 +418,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm Kiếm", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(102, 102, 102))); // NOI18N
 
+        btnTimKiem.setBackground(new java.awt.Color(102, 102, 255));
         btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_search_25px.png"))); // NOI18N
         btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -446,13 +449,13 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
 
         tbSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "MaSach", "TenSach", "MaTacGia", "MaLinhVuc", "MaLoaiSach", "MaNXB", "NamXuatBan", "GiaBan", "LanTaiBan", "ISBN", "Tap", "MaNgonNgu", "HinhAnh"
+                "MaSach", "TenSach", "MaTacGia", "MaLinhVuc", "MaLoaiSach", "MaNXB", "NamXuatBan", "GiaBan", "LanTaiBan", "ISBN", "Tap", "MaNgonNgu", "Số Lượng", "HinhAnh"
             }
         ));
         tbSach.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -463,10 +466,6 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
         jScrollPane1.setViewportView(tbSach);
 
         jLabel25.setText("Năm sản xuất");
-
-        cboNgonNgu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cboTacGia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         tbllv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -492,8 +491,8 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -529,7 +528,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -542,9 +541,140 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
 
         jTabbedPane1.addTab("Thể loại", jPanel9);
 
+        tbltg.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Tác giả"
+            }
+        ));
+        tbltg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbltgMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tbltg);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Tác giả", jPanel2);
+
+        tblnxb.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Nhà xuất bản"
+            }
+        ));
+        tblnxb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblnxbMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(tblnxb);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Nhà xuất bản", jPanel3);
+
+        tblng.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Ngôn ngữ"
+            }
+        ));
+        tblng.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblngMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(tblng);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("ngôn ngữ", jPanel5);
+
         btnxoalv.setText("xóa");
 
         btnxoatl.setText("xóa");
+
+        txtnxb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnxbActionPerformed(evt);
+            }
+        });
+
+        txtngonngu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtngonnguActionPerformed(evt);
+            }
+        });
+
+        txttacgia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txttacgiaActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Số Lượng:");
 
         javax.swing.GroupLayout QuanlysachLayout = new javax.swing.GroupLayout(Quanlysach);
         Quanlysach.setLayout(QuanlysachLayout);
@@ -560,20 +690,13 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
                         .addContainerGap())
                     .addGroup(QuanlysachLayout.createSequentialGroup()
                         .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(QuanlysachLayout.createSequentialGroup()
                                 .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(txtMaSach))
-                                    .addGroup(QuanlysachLayout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtTenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(QuanlysachLayout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cboTacGia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
                                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -584,42 +707,54 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
                                         .addComponent(cboTheLoai, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
                                         .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cboNXB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtnxb, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(QuanlysachLayout.createSequentialGroup()
+                                        .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txttacgia, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtTenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnxoalv, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnxoatl, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(19, 19, 19)
                                 .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cboNgonNgu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtSoLuong))
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
                                         .addComponent(jLabel25)
                                         .addGap(10, 10, 10)
                                         .addComponent(txtNamSX))
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
-                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtgia, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtLanTaiBan, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
-                                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtISBN))
+                                        .addComponent(txtngonngu))
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
                                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(txtTap, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtLanTaiBan, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtISBN))
+                                    .addGroup(QuanlysachLayout.createSequentialGroup()
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtgia, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(37, 37, 37)
                         .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(QuanlysachLayout.createSequentialGroup()
-                                .addGap(0, 8, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
                                         .addComponent(lblanh, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -631,10 +766,9 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
                                         .addGap(184, 184, 184)
                                         .addComponent(jButton4)))
-                                .addGap(118, 118, 118))
+                                .addGap(124, 124, 124))
                             .addGroup(QuanlysachLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         QuanlysachLayout.setVerticalGroup(
@@ -660,7 +794,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel3)
-                                            .addComponent(cboTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txttacgia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(9, 9, 9)
                                         .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4)
@@ -675,11 +809,11 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel6)
-                                            .addComponent(cboNXB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(txtnxb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(QuanlysachLayout.createSequentialGroup()
                                         .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel11)
-                                            .addComponent(cboNgonNgu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtngonngu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel14)
@@ -700,6 +834,10 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
                                         .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(txtNamSX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel25))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                                .addGroup(QuanlysachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(QuanlysachLayout.createSequentialGroup()
@@ -715,7 +853,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
                                     .addComponent(lblanh, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -730,8 +868,7 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Quanlysach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Quanlysach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -748,13 +885,13 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         String timkiem = txtTimKiem.getText().trim().toLowerCase();
-        if (timkiem.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên sác trước khi tìm kiếm");
-            return;
-        }
         DefaultTableModel defaultTableModel = (DefaultTableModel) tbSach.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(defaultTableModel);
         tbSach.setRowSorter(sorter);
+        if (timkiem.isEmpty()) {
+            sorter.setRowFilter(null);
+            return;
+        }
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + timkiem, 1));
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
@@ -916,6 +1053,45 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
         // TODO add your handling code here:
     }//GEN-LAST:event_cboLinhVucMouseEntered
 
+    private void tbltgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbltgMouseClicked
+        // TODO add your handling code here:
+        int row = tbltg.getSelectedRow();
+        if (row >= 0) {
+            String tenTacGia = (String) tbltg.getValueAt(row, 0);
+            txttacgia.setText(tenTacGia);
+        }
+    }//GEN-LAST:event_tbltgMouseClicked
+
+    private void tblnxbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblnxbMouseClicked
+        // TODO add your handling code here:
+        int row = tblnxb.getSelectedRow();
+        if (row >= 0) {
+            String tenNXB = (String) tblnxb.getValueAt(row, 0);
+            txtnxb.setText(tenNXB);
+        }
+    }//GEN-LAST:event_tblnxbMouseClicked
+
+    private void tblngMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblngMouseClicked
+        // TODO add your handling code here:
+        int row = tblng.getSelectedRow();
+        if (row >= 0) {
+            String tenNgonNgu = (String) tblng.getValueAt(row, 0);
+            txtngonngu.setText(tenNgonNgu);
+        }
+    }//GEN-LAST:event_tblngMouseClicked
+
+    private void txtnxbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnxbActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnxbActionPerformed
+
+    private void txtngonnguActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtngonnguActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtngonnguActionPerformed
+
+    private void txttacgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttacgiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txttacgiaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -970,9 +1146,6 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
     private javax.swing.JButton btnxoatl;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboLinhVuc;
-    private javax.swing.JComboBox<String> cboNXB;
-    private javax.swing.JComboBox<String> cboNgonNgu;
-    private javax.swing.JComboBox<String> cboTacGia;
     private javax.swing.JComboBox<String> cboTheLoai;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -990,26 +1163,40 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblanh;
     private javax.swing.JTable tbSach;
     private javax.swing.JTable tbllv;
+    private javax.swing.JTable tblng;
+    private javax.swing.JTable tblnxb;
+    private javax.swing.JTable tbltg;
     private javax.swing.JTable tbltl;
     private javax.swing.JTextField txtISBN;
     private javax.swing.JTextField txtLanTaiBan;
     private javax.swing.JTextField txtMaSach;
     private javax.swing.JTextField txtNamSX;
+    private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTap;
     private javax.swing.JTextField txtTenSach;
     private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txtgia;
+    private javax.swing.JTextField txtngonngu;
+    private javax.swing.JTextField txtnxb;
+    private javax.swing.JTextField txttacgia;
     // End of variables declaration//GEN-END:variables
     public void refreshCboLinhVuc() {
         fillCboLinhVuc();
@@ -1038,6 +1225,42 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
         for (LoaiSach n : loaiSachList) {
             Object[] rowData = {
                 n.getTenLoaiSach()
+            };
+            model.addRow(rowData);
+        }
+
+    }
+
+    public void fillToTabletg() {
+        DefaultTableModel defaultTableModel = (DefaultTableModel) tbltg.getModel();
+        defaultTableModel.setRowCount(0);
+        listTacGia = TacGiaDAO.getAll();
+        for (TacGia tacGia : listTacGia) {
+            Object[] rowData = {
+                tacGia.getTenTacGia(),};
+            defaultTableModel.addRow(rowData);
+        }
+    }
+
+    public void fillToTablenxb() {
+        DefaultTableModel defaultTableModel = (DefaultTableModel) tblnxb.getModel();
+        defaultTableModel.setRowCount(0);
+        nhaXuatBanList = nhaXuatBanDAO.getAll();
+        for (NhaXuatBan nhaXuatBan : nhaXuatBanList) {
+            Object[] rowData = {
+                nhaXuatBan.getTenNXB()
+            };
+            defaultTableModel.addRow(rowData);
+        }
+    }
+
+    public void fillToTableng() {
+        DefaultTableModel model = (DefaultTableModel) tblng.getModel();
+        model.setRowCount(0);
+        ngonNguList = ngonNguDAO.getAll();
+        for (NgonNgu n : ngonNguList) {
+            Object[] rowData = {
+                n.getTenNgonNgu()
             };
             model.addRow(rowData);
         }
@@ -1121,21 +1344,9 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             txtgia.setText(String.valueOf(entity.getGiaBan()));
             txtISBN.setText(entity.getISBN());
             txtNamSX.setText(new SimpleDateFormat("yyyy").format(entity.getNamXuatBan()));
-
-            TacGia tacGia = TacGiaDAO.findByID(entity.getMaTacGia());
-            if (tacGia != null) {
-                cboTacGia.setSelectedItem(tacGia);
-            }
-
-            NhaXuatBan nhaXuatBan = nhaXuatBanDAO.findByID(entity.getMaNXB());
-            if (nhaXuatBan != null) {
-                cboNXB.setSelectedItem(nhaXuatBan);
-            }
-
-            NgonNgu ngonNgu = ngonNguDAO.findByID(entity.getMaNgonNgu());
-            if (ngonNgu != null) {
-                cboNgonNgu.setSelectedItem(ngonNgu);
-            }
+            txttacgia.setText(getTenTacGia(entity.getMaTacGia()));
+            txtnxb.setText(getTenNXB(entity.getMaNXB()));
+            txtngonngu.setText(getTenNgonNgu(entity.getMaNgonNgu()));
 
             lblanh.setIcon(null);
             lblanh.setText("");
@@ -1219,26 +1430,28 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             }
 
             // Xử lý tác giả
-            if (cboTacGia.getSelectedItem() == null) {
-                throw new IllegalArgumentException("Vui lòng chọn tác giả");
+            String tenTacGia = txttacgia.getText();
+            TacGia tacGia = TacGiaDAO.findByTen(tenTacGia);
+            if (tacGia == null) {
+                throw new IllegalArgumentException("Tác giả không tồn tại: " + tenTacGia);
             }
-            TacGia tacGia = (TacGia) cboTacGia.getSelectedItem();
             sach.setMaTacGia(tacGia.getMaTacGia());
 
-            // Xử lý ngôn ngữ
-            if (cboNgonNgu.getSelectedItem() == null) {
-                throw new IllegalArgumentException("Vui lòng chọn ngôn ngữ");
-            }
-            NgonNgu ngonNgu = (NgonNgu) cboNgonNgu.getSelectedItem();
-            sach.setMaNgonNgu(ngonNgu.getMaNgonNgu());
-
             // Xử lý nhà xuất bản
-            if (cboNXB.getSelectedItem() == null) {
-                throw new IllegalArgumentException("Vui lòng chọn nhà xuất bản");
+            String tenNXB = txtnxb.getText();
+            NhaXuatBan nxb = nhaXuatBanDAO.findByTen(tenNXB);
+            if (nxb == null) {
+                throw new IllegalArgumentException("Nhà xuất bản không tồn tại: " + tenNXB);
             }
-            NhaXuatBan nhaXuatBan = (NhaXuatBan) cboNXB.getSelectedItem();
-            sach.setMaNXB(nhaXuatBan.getMaNXB());
+            sach.setMaNXB(nxb.getMaNXB());
 
+            // Xử lý ngôn ngữ
+            String tenNgonNgu = txtngonngu.getText();
+            NgonNgu ngonNgu = ngonNguDAO.findByTen(tenNgonNgu);
+            if (ngonNgu == null) {
+                throw new IllegalArgumentException("Ngôn ngữ không tồn tại: " + tenNgonNgu);
+            }
+            sach.setMaNgonNgu(ngonNgu.getMaNgonNgu());
             // Xử lý hình ảnh
             String imageName = lblanh.getToolTipText();
             if (imageName != null && !imageName.isEmpty()) {
@@ -1429,15 +1642,15 @@ public class QuanLySach extends javax.swing.JDialog implements poly.books.contro
             txtLanTaiBan.setText("");
             txtMaSach.setText("");
             txtNamSX.setText("");
-            cboTacGia.setSelectedIndex(0);
+            txttacgia.setText("");
             txtTap.setText("");
             txtTenSach.setText("");
             txtgia.setText("");
             cboLinhVuc.setSelectedIndex(-1);
-            cboNXB.setSelectedIndex(-1);
-            cboNgonNgu.setSelectedIndex(0);
+            txtnxb.setText("");
+            txtngonngu.setText("");
             cboTheLoai.setSelectedIndex(-1);
-            
+
             JOptionPane.showMessageDialog(this, "Làm mới thành công");
         } else {
             return;

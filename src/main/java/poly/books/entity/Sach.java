@@ -35,6 +35,7 @@ public class Sach {
     private transient List<Integer> maLoaiSachs;
     private List<LinhVuc> linhVucList;
     private List<LoaiSach> loaiSachList;
+    private int SoLuong;
 
 // Và các phương thức getter/setter tương ứng
     public List<LinhVuc> getLinhVucList() {

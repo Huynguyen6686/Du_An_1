@@ -33,8 +33,14 @@ public class ChiTietHoaDonDAO {
                       DELETE FROM [dbo].[ChiTietHoaDon]
                              WHERE MaHD = ?
                        """;
+    String findBySQL = """
+                       SELECT * FROM [QLNhaSachPro].[dbo].[ChiTietHoaDon] where MaHD = ?
+                       """;
         public List<ChiTietHoaDon> getAll() {
          return XQuery.getBeanList(ChiTietHoaDon.class, getAllSQL);
+    }
+        public List<ChiTietHoaDon> findByID(int MaHD) {
+        return XQuery.getBeanList(ChiTietHoaDon.class, findBySQL, MaHD);
     }
     public int update(ChiTietHoaDon chiTietHoaDon) {
         Object[] values = {

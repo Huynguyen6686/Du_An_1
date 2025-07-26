@@ -85,21 +85,38 @@ public class PolybookJFrame extends javax.swing.JFrame implements poly.books.con
     }
 
     private void showQuanLyHoaDonContent() {
-        QuanLyHoaDon.removeAll();
-        QuanLyHoaDon.revalidate();
-        QuanLyHoaDon.repaint();
+        pnlQuanLyHD.removeAll();
+        pnlQuanLyHD.revalidate();
+        pnlQuanLyHD.repaint();
 
         // Tạo instance của QuanLySach và lấy nội dung
-        QuanLyHoaDon pnlQuanLyHD = new QuanLyHoaDon(this, false); // Không cần modal
-        JPanel contentPanel = pnlQuanLyHD.getContentPanel();
+        QuanLyHoaDon QuanLyHD = new QuanLyHoaDon(this, false); // Không cần modal
+        JPanel contentPanel = QuanLyHD.getContentPanel();
         contentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Thêm border nếu cần
 
         // Thêm nội dung vào mainSach
-        QuanLyHoaDon.setLayout(new BorderLayout());
-        QuanLyHoaDon.add(contentPanel, BorderLayout.CENTER);
-        QuanLyHoaDon.revalidate();
-        QuanLyHoaDon.repaint();
+        pnlQuanLyHD.setLayout(new BorderLayout());
+        pnlQuanLyHD.add(contentPanel, BorderLayout.CENTER);
+        pnlQuanLyHD.revalidate();
+        pnlQuanLyHD.repaint();
         showPanel(QuanLyHoaDon);
+    }
+    private void showQuanLyBanHang() {
+        pnlBanHang.removeAll();
+        pnlBanHang.revalidate();
+        pnlBanHang.repaint();
+
+        // Tạo instance của QuanLySach và lấy nội dung
+        BanHang QuanLyBH = new BanHang(this, false); // Không cần modal
+        JPanel contentPanel = QuanLyBH.getContentPanel();
+        contentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Thêm border nếu cần
+
+        // Thêm nội dung vào mainSach
+        pnlBanHang.setLayout(new BorderLayout());
+        pnlBanHang.add(contentPanel, BorderLayout.CENTER);
+        pnlBanHang.revalidate();
+        pnlBanHang.repaint();
+        showPanel(BanHang);
     }
 
     private void showPanel(JPanel panelToShow) {
@@ -619,6 +636,7 @@ public class PolybookJFrame extends javax.swing.JFrame implements poly.books.con
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbDangXuatMouseClicked
+         XAuth.user = null; 
         System.exit(0);
     }//GEN-LAST:event_lbDangXuatMouseClicked
 
@@ -631,7 +649,7 @@ public class PolybookJFrame extends javax.swing.JFrame implements poly.books.con
     }//GEN-LAST:event_lbThongKeMouseClicked
 
     private void lbQuanLyHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbQuanLyHDMouseClicked
-        showPanel(QuanLyHoaDon);
+        showQuanLyHoaDonContent();
     }//GEN-LAST:event_lbQuanLyHDMouseClicked
 
     private void lbQuanLyKHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbQuanLyKHMouseClicked
@@ -647,7 +665,7 @@ public class PolybookJFrame extends javax.swing.JFrame implements poly.books.con
     }//GEN-LAST:event_lbQLSachMouseClicked
 
     private void lbBanHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbBanHangMouseClicked
-        showPanel(BanHang);
+        showQuanLyBanHang();
     }//GEN-LAST:event_lbBanHangMouseClicked
 
     private void lbDoiMkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbDoiMkMouseClicked
@@ -769,16 +787,22 @@ private JLabel selectedLabel = null; // Theo dõi label được chọn
         this.showLoginJDialog(this);
         UserDAOImpl userDAO = new UserDAOImpl();
 
-        String tenDangNhap = XAuth.user.getTenDangNhap();
-        NguoiDungSD user1 = userDAO.findById(tenDangNhap);
-        if (user1 != null) {
-            // Cập nhật thông tin giao diện
-            XIcon.setIcon(lblAnh, "images/" + (user1.getHinhAnh() != null ? user1.getHinhAnh() : "user.png"));
-            lblHoTen.setText(user1.getHoTen());
-            lblChucVu.setText(user1.isQuanLy() ? "Quản Lý" : "Nhân Viên");
+        if (XAuth.user == null) {
+            System.out.println("No user logged in!");
+            lblHoTen.setText("Chưa đăng nhập");
+            lblChucVu.setText("Không xác định");
+            return;
+        }
 
-            // Ẩn các menu nếu người dùng không phải quản lý
-            if (!user1.isQuanLy()) {
+        String tenDangNhap = XAuth.user.getTenDangNhap();
+        System.out.println("Initializing user: " + tenDangNhap);
+        NguoiDungSD user = userDAO.findById(tenDangNhap);
+        if (user != null) {
+            XIcon.setIcon(lblAnh, "images/" + (user.getHinhAnh() != null ? user.getHinhAnh(): "user.png"));
+            lblHoTen.setText(user.getHoTen());
+            lblChucVu.setText(user.isQuanLy() ? "Quản lý" : "Nhân viên");
+
+            if (!user.isQuanLy()) {
                 lbQLSach.setVisible(false);
                 lbQuanLyHD.setVisible(false);
                 lbQuanLyKH.setVisible(false);
@@ -786,9 +810,8 @@ private JLabel selectedLabel = null; // Theo dõi label được chọn
                 lbgiamgia.setVisible(false);
                 lbThongKe.setVisible(false);
             }
-
         } else {
-            // Xử lý trường hợp không tìm thấy người dùng
+            System.out.println("User not found in database: " + tenDangNhap);
             lblHoTen.setText("Không tìm thấy người dùng");
             lblChucVu.setText("Không xác định");
         }

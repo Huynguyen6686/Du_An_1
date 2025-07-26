@@ -29,14 +29,17 @@ public class NhaXuatBanDAO {
                                         VALUES
                                               (?)
                        """;
-        String updateSQL = """
+    String updateSQL = """
                          UPDATE [dbo].[NhaXuatBan]
                             SET [TenNXB] = ?
                           WHERE MaNXB = ?
                        """;
-        String deleteSQL = """
+    String deleteSQL = """
                         DELETE FROM [dbo].[NhaXuatBan]
                               WHERE MaNXB = ?
+                       """;
+    String findByTenSQL = """
+                       SELECT * FROM [QLNhaSachPro].[dbo].[NhaXuatBan] where TenNXB = ?
                        """;
 
     public List<NhaXuatBan> getAll() {
@@ -46,22 +49,27 @@ public class NhaXuatBanDAO {
     public NhaXuatBan findByID(int MaNXB) {
         return XQuery.getSingleBean(NhaXuatBan.class, findBySQL, MaNXB);
     }
+
+    public NhaXuatBan findByTen(String tenNXB) {
+        return XQuery.getSingleBean(NhaXuatBan.class, findByTenSQL, tenNXB);
+    }
+
     public int create(NhaXuatBan nhaXuatBan) {
-            Object[] rowData = {
-                nhaXuatBan.getTenNXB()
-            };
-            return XJdbc.executeUpdate(createSQL, rowData);
-        }
+        Object[] rowData = {
+            nhaXuatBan.getTenNXB()
+        };
+        return XJdbc.executeUpdate(createSQL, rowData);
+    }
 
-        public int update(NhaXuatBan nhaXuatBan) {
-            Object[] rowData = {
-                nhaXuatBan.getTenNXB(),
-                nhaXuatBan.getMaNXB()
-            };
-            return XJdbc.executeUpdate(updateSQL, rowData);
-        }
+    public int update(NhaXuatBan nhaXuatBan) {
+        Object[] rowData = {
+            nhaXuatBan.getTenNXB(),
+            nhaXuatBan.getMaNXB()
+        };
+        return XJdbc.executeUpdate(updateSQL, rowData);
+    }
 
-        public int delete(int id) {
-            return XJdbc.executeUpdate(deleteSQL, id);
-        }
+    public int delete(int id) {
+        return XJdbc.executeUpdate(deleteSQL, id);
+    }
 }

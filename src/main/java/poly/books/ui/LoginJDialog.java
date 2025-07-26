@@ -238,19 +238,32 @@ UserDAO dao = new UserDAOImpl();
 
     @Override
     public void login() {
-        String username = txtUsername.getText();
-        String password = new String(txtPassword.getPassword());
-        NguoiDungSD user = dao.findById(username);
-        if (user == null) {
-            XDialog.alert("Sai tên đăng nhập!");
-        } else if (!password.equals(user.getMatKhau())) {
-            XDialog.alert("Sai mật khẩu đăng nhập!");
-        } else if (!user.isTrangThai()) {
-            XDialog.alert("Tài khoản của bạn đang tạm dừng!");
-        } else {
-            XAuth.user = user;
-            this.dispose();
-        }
+        String username = txtUsername.getText().trim();
+    String password = new String(txtPassword.getPassword()).trim();
+    
+    if (username.isEmpty()) {
+        XDialog.alert( "Tên đăng nhập không được để trống!");
+        return;
+    }
+    if (password.isEmpty()) {
+        XDialog.alert( "Mật khẩu không được để trống!");
+        return;
+    }
+
+    NguoiDungSD user = dao.findById(username);
+    System.out.println("Login attempt - Username: " + username + ", User: " + (user != null ? user.getTenDangNhap() : "null"));
+    if (user == null) {
+        XDialog.alert("Sai tên đăng nhập!");
+    } else if (!password.equals(user.getMatKhau())) {
+        XDialog.alert("Sai mật khẩu đăng nhập!");
+    } else if (!user.isTrangThai()) {
+        XDialog.alert( "Tài khoản của bạn đang tạm dừng!");
+    } else {
+        XAuth.user = user;
+        XAuth.currentTenDangNhap = username; // Lưu TenDangNhap
+        System.out.println("Login successful - TenDangNhap: " + XAuth.currentTenDangNhap);
+        this.dispose();
+    }
     }
 
     @Override

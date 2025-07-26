@@ -37,11 +37,15 @@ public class NgonNguDAO {
                    DELETE FROM [dbo].[NgonNgu]
                          WHERE MaNgonNgu=?
                    """;
-
+    String findByTenSQL = """
+                       SELECT * FROM [QLNhaSachPro].[dbo].[NgonNgu] where TenNgonNgu = ?
+                       """;
     public List<NgonNgu> getAll() {
         return XQuery.getBeanList(NgonNgu.class, getAllSQL);
     }
-
+    public NgonNgu findByTen(String tenNgonNgu) {
+        return XQuery.getSingleBean(NgonNgu.class, findByTenSQL, tenNgonNgu);
+    }
     public NgonNgu findByID(int MaNgonNgu) {
         return XQuery.getSingleBean(NgonNgu.class, findBySQL, MaNgonNgu);
     }

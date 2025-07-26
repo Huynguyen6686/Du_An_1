@@ -1,5 +1,6 @@
 package poly.books.util;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -26,8 +27,8 @@ public class XJdbc {
     public static Connection openConnection() {
         var driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
        var dburl = "jdbc:sqlserver://localhost:1433;databaseName=QLNhaSachPro;encrypt=true;trustServerCertificate=true;";
-        var username = "vanhuy";
-        var password = "vanhuy404";
+        var username = "sa";
+        var password = "123";
         try {
             if (!XJdbc.isReady()) {
                 Class.forName(driver);
@@ -38,7 +39,19 @@ public class XJdbc {
         }
         return connection;
     }
-
+public static <T> T getIdentityValue(String sql, Class<T> type) throws SQLException {
+        try (var conn = poly.books.util.XJdbc.openConnection(); var stmt = conn.createStatement(); var rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                if (type == Long.class) {
+                    return type.cast(rs.getLong(1));
+                } else if (type == Integer.class) { // Thêm xử lý cho Integer.class
+                    return type.cast(rs.getInt(1));
+                }
+                throw new UnsupportedOperationException("Chỉ hỗ trợ Long.class và Integer.class hiện tại");
+            }
+        }
+        return null; // Trả về null nếu không có kết quả
+    }
     /**
      * Đóng kết nối
      */

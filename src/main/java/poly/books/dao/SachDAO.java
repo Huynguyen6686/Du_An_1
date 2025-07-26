@@ -19,17 +19,17 @@ public class SachDAO {
     // SQL lấy tất cả sách (đã bỏ MaLinhVuc và MaLoaiSach)
     String getAllSQL = """
                        SELECT  [MaSach]
-                               ,[TenSach]
-                               ,[MaTacGia]
-                               ,[MaNXB]
-                               ,[NamXuatBan]
-                               ,[GiaBan]
-                               ,[LanTaiBan]
-                               ,[ISBN]
-                               ,[Tap]
-                               ,[MaNgonNgu]
-                               ,[HinhAnh]
-                           FROM [QLNhaSachPro].[dbo].[Sach]
+                             ,[TenSach]
+                             ,[MaTacGia]
+                             ,[MaNXB]
+                             ,[NamXuatBan]
+                             ,[GiaBan]
+                             ,[LanTaiBan]
+                             ,[ISBN]
+                             ,[Tap]
+                             ,[MaNgonNgu]
+                             ,[HinhAnh]
+                         FROM [QLNhaSachPro].[dbo].[Sach]
                        """;
 
     // SQL tạo sách mới (đã bỏ MaLinhVuc và MaLoaiSach)
@@ -92,11 +92,24 @@ public class SachDAO {
                                           ([MaSach], [MaLoaiSach])
                                     VALUES (?, ?)
                                """;
+    String gallDanhSachSP = """
+                          SELECT s.MaSach, s.TenSach, s.MaTacGia, s.MaNXB, 
+                                 s.NamXuatBan, s.GiaBan, s.LanTaiBan, s.ISBN, s.Tap, s.MaNgonNgu, k.SoLuong, s.HinhAnh 
+                          FROM Sach s 
+                          JOIN Kho k ON s.MaSach = k.MaSach
+                          """;
+
+    public List<Sach> getAllDanhSachSP() {
+        return XQuery.getBeanList(Sach.class, gallDanhSachSP);
+    }
 
     public List<Sach> getAll() {
         return XQuery.getBeanList(Sach.class, getAllSQL);
     }
-
+public Sach findByID(int maSach) {
+        String sql = gallDanhSachSP + " WHERE s.MaSach = ?";
+        return XQuery.getSingleBean(Sach.class, sql, maSach);
+    }
     /**
      * Tạo sách mới (không bao gồm lĩnh vực và loại sách)
      */

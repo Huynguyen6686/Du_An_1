@@ -444,22 +444,29 @@ public class QuanLyKhachHang extends javax.swing.JDialog implements poly.books.c
 
     @Override
     public void create() {
-        if (txtTenKH.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tên khách hàng không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        }else if((txtSDT.getText().trim().isEmpty())){
-            JOptionPane.showMessageDialog(this, "SĐT khách hàng không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-            KhachHang kh = getForm();
-            KHdao.create(kh);
-            this.fillToTable();
-            this.clear();
-            JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-        } catch (RuntimeException ex) {
-            JOptionPane.showMessageDialog(this, "Thêm khách hàng đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
+         KhachHang newKhachHang = getForm();
+
+    // Kiểm tra xem có phải Mã khách hàng không hợp lệ (lỗi parse)
+    // Nếu getForm() có JOptionPane.showMessageDialog, bạn có thể kiểm tra một số điều kiện ở đây
+    // Ví dụ, kiểm tra xem newKhachHang có phải là null hoặc có các trường cần thiết bị rỗng không
+    if (newKhachHang == null || newKhachHang.getTenKH().isEmpty()) { // Thêm các kiểm tra cần thiết
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin khách hàng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return; // Dừng nếu dữ liệu không hợp lệ
+    }
+
+    try {
+        // Gọi phương thức create của KhachHangDAO với đối tượng newKhachHang
+        KHdao.create(newKhachHang);
+        
+        // Nếu thành công:
+        JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+        this.fillToTable(); // Cập nhật lại bảng dữ liệu
+        this.clear();       // Xóa trắng form sau khi thêm thành công
+    } catch (java.sql.SQLException e) {
+        // Xử lý lỗi nếu có ngoại lệ SQL xảy ra
+        JOptionPane.showMessageDialog(this, "Lỗi khi thêm khách hàng: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace(); // In chi tiết lỗi ra console để debug
+    }
     }
 
     @Override
