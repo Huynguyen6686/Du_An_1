@@ -16,7 +16,6 @@ import lombok.*;
  */
 public class PhieuGiamGia {
     private int MaPhieu;
-    private int MaKH;
     private int GiaTri;
     private int DieuKienApDung;
     private int TrangThai;
