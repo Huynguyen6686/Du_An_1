@@ -46,12 +46,10 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtVoucherID = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         txtCondition = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtCustomerID = new javax.swing.JTextField();
         txtValue = new javax.swing.JTextField();
         rdoAvailable = new javax.swing.JRadioButton();
         rdoUnavailable = new javax.swing.JRadioButton();
@@ -73,9 +71,6 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Tạo mã khuyến mại ");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Mã khách hàng");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Giá trị");
@@ -102,31 +97,24 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtVoucherID, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCondition)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(rdoAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(28, 28, 28)
-                                        .addComponent(rdoUnavailable, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtValue, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtValue, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtCustomerID))))
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(rdoAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(rdoUnavailable, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtVoucherID, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 3, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -136,41 +124,38 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(txtVoucherID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(txtValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(txtCondition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(rdoAvailable)
-                    .addComponent(rdoUnavailable))
-                .addContainerGap(46, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rdoAvailable)
+                        .addComponent(rdoUnavailable)))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách khuyến mại", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
         tblPhieuGiamGia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Mã Phiếu", "Mã khách hàng", "Giá trị", "Điều kiện áp dụng", "Trạng thái"
+                "Mã Phiếu", "Giá trị", "Điều kiện áp dụng", "Trạng thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -418,7 +403,6 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -431,7 +415,6 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
     private javax.swing.JRadioButton rdoUnavailable;
     private javax.swing.JTable tblPhieuGiamGia;
     private javax.swing.JTextField txtCondition;
-    private javax.swing.JTextField txtCustomerID;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtValue;
     private javax.swing.JTextField txtVoucherID;
@@ -445,7 +428,6 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
     @Override
     public void setForm(PhieuGiamGia entity) {
         txtVoucherID.setText(String.valueOf(entity.getMaPhieu()));
-        txtCustomerID.setText(String.valueOf(entity.getMaKH()));
         txtValue.setText(String.valueOf(entity.getGiaTri()));
         txtCondition.setText(String.valueOf(entity.getDieuKienApDung()));
         rdoAvailable.setSelected(entity.getTrangThai() == 1);
@@ -456,7 +438,6 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
     public PhieuGiamGia getForm() {
         PhieuGiamGia phieuGiamGia = new PhieuGiamGia();
         phieuGiamGia.setMaPhieu(Integer.valueOf(txtVoucherID.getText()));
-        phieuGiamGia.setMaKH(Integer.valueOf(txtCustomerID.getText()));
         phieuGiamGia.setGiaTri(Integer.valueOf(txtValue.getText()));
         phieuGiamGia.setDieuKienApDung(Integer.valueOf(txtCondition.getText()));
         phieuGiamGia.setTrangThai(rdoAvailable.isSelected() ? 1 : 0);
@@ -471,7 +452,6 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
         for (PhieuGiamGia phieuGiamGia : phieuGiamGiaList) {
             Object[] rowData = {
                 phieuGiamGia.getMaPhieu(),
-                phieuGiamGia.getMaKH(),
                 phieuGiamGia.getGiaTri(),
                 phieuGiamGia.getDieuKienApDung(),
                 phieuGiamGia.getTrangThai() == 1 ? "Có hiệu lực" : "Đã hết hạn"
@@ -545,7 +525,6 @@ public class QuanLyPhieuGiamGia extends javax.swing.JDialog implements poly.book
         int confirm = JOptionPane.showConfirmDialog(this, "Bạn có muốn làm mới không ?", "Confirm question", JOptionPane.YES_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             txtVoucherID.setText("");
-            txtCustomerID.setText("");
             txtValue.setText("");
             txtCondition.setText("");
             rdoAvailable.setSelected(false);

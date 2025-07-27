@@ -17,7 +17,6 @@ public class PhieuGiamGiaDAO {
 
     String getAllSQL = """
                        SELECT TOP (1000) [MaPhieu]
-                             ,[MaKH]
                              ,[GiaTri]
                              ,[DieuKienApDung]
                              ,[TrangThai]
@@ -25,18 +24,17 @@ public class PhieuGiamGiaDAO {
                        """;
     String createSQL = """
                        INSERT INTO [dbo].[PhieuGiamGia]
-                                  ([MaKH]
                                   ,[GiaTri]
                                   ,[DieuKienApDung]
                                   ,[TrangThai])
                             VALUES
-                                  (?,?,?,?)
+                                  (?,?,?)
                        """;
 
     String updateSQL = """
                        UPDATE [dbo].[PhieuGiamGia]
-                          SET [MaKH] = ?
-                             ,[GiaTri] = ?
+                          SET
+                             [GiaTri] = ?
                              ,[DieuKienApDung] = ?
                              ,[TrangThai] = ?
                         WHERE MaPhieu = ?
@@ -55,7 +53,6 @@ public class PhieuGiamGiaDAO {
 
     public int create(PhieuGiamGia phieuGiamGia) {
         Object[] values = {
-            phieuGiamGia.getMaKH(),
             phieuGiamGia.getGiaTri(),
             phieuGiamGia.getDieuKienApDung(),
             phieuGiamGia.getTrangThai()
@@ -65,7 +62,6 @@ public class PhieuGiamGiaDAO {
 
     public int update(PhieuGiamGia phieuGiamGia) {
         Object[] values = {
-            phieuGiamGia.getMaKH(),
             phieuGiamGia.getGiaTri(),
             phieuGiamGia.getDieuKienApDung(),
             phieuGiamGia.getTrangThai(),
