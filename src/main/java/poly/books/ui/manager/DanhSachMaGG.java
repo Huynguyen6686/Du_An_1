@@ -41,7 +41,6 @@ public class DanhSachMaGG extends javax.swing.JDialog {
         for (PhieuGiamGia phieuGiamGia : phieuGiamGiaList) {
             Object[] rowData = {
                 phieuGiamGia.getMaPhieu(),
-                phieuGiamGia.getMaKH(),
                 phieuGiamGia.getGiaTri(),
                 phieuGiamGia.getDieuKienApDung(),
                 phieuGiamGia.getTrangThai() == 1 ? "Có hiệu lực" : "Đã hết hạn"
